@@ -25,6 +25,10 @@ function AppMenu() {
         <Menu.Item key="tasks:1"><Link to="/tasks">Tasks</Link></Menu.Item>
         <Menu.Item key="tasks:2"><Link to="/tasks/new">New Task</Link></Menu.Item>
       </SubMenu>
+      <SubMenu key="types" icon={<AppstoreOutlined />} title="Types">
+        <Menu.Item key="types:1"><Link to="/types">Types</Link></Menu.Item>
+        <Menu.Item key="types:2"><Link to="/types/new">New Type</Link></Menu.Item>
+      </SubMenu>
       <Menu.Item key="about" icon={<AppstoreOutlined />}>
         <Link to="/about">About</Link>
       </Menu.Item>
@@ -32,16 +36,30 @@ function AppMenu() {
   );
 }
 
-function TaskRoutes({ match }) {
+function TaskRoutes(props) {
   return (
     <>
-      <Route exact path={`${match.path}/new`} component={TaskForm} />
+      <Route exact path={`${props.match.path}/new`} component={TaskForm} />
       <Route
         exact
-        path={`${match.path}/edit/:taskId`}
+        path={`${props.match.path}/edit/:taskId`}
         component={TaskForm}
       />
-      <Route exact path={`${match.path}/`} component={TaskList} />
+      <Route exact path={`${props.match.path}/`} component={TaskList} />
+    </>
+  );
+}
+
+function TypeRoutes(props) {
+  return (
+    <>
+      <Route exact path={`${props.match.path}/new`} component={TaskForm} />
+      <Route
+        exact
+        path={`${props.match.path}/edit/:taskId`}
+        component={TaskForm}
+      />
+      <Route exact path={`${props.match.path}/`} component={TaskList} />
     </>
   );
 }
@@ -64,6 +82,7 @@ function App() {
                     <Route path="/about" component={About} />
                     {/* Hacemos esto porque tasks tiene subrutas */}
                     <Route path="/tasks" component={TaskRoutes} />
+                    <Route path="/types" component={TypeRoutes} />
                   </>
               </div>
           </Content>

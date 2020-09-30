@@ -104,7 +104,7 @@ function TaskList (props) {
             title: 'Limit Date',
             dataIndex: 'limitDate',
             key: 'limitDate',
-            render: date => moment(date).format('DD/MM/YYYY')
+            render: date => moment(date).format('YYYY-MM-DD')
           },
         {
           title: 'Type',
@@ -154,7 +154,7 @@ function TaskList (props) {
                 </Tooltip>
                 </Col>
             </Row>
-            <Table pagination={{ defaultCurrent:1, pageSize: 5, total:tasks.length }} columns={columns} dataSource={tasks} />
+            <Table pagination={{ defaultCurrent:1, pageSize: 3, total:tasks.length }} columns={columns} dataSource={tasks} />
         </div>
     )
 }

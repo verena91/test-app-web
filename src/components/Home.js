@@ -1,6 +1,6 @@
 import React from 'react';
 
-function About(props) {
+function Home(props) {
   return (
     // <h3>Requested Param: {props.match.params.id}</h3>
     <>
@@ -10,4 +10,4 @@ function About(props) {
   );
 }
 
-export default About;
+export default Home;
