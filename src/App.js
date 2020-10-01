@@ -46,6 +46,22 @@ function TaskRoutes({ match }) {
   );
 }
 
+function TypeRoutes({ match }) {
+  return (
+    <>
+      <Route exact path={`${match.path}/new`} component={TaskForm} />
+      <Route
+        exact
+        path={`${match.path}/edit/:taskId`}
+        component={TaskForm}
+      />
+      <Route exact path={`${match.path}/`} component={TaskList} />
+    </>
+  );
+}
+
+
+
 function App() {
   return (
       <Router>
@@ -64,6 +80,7 @@ function App() {
                     <Route path="/about" component={About} />
                     {/* Hacemos esto porque tasks tiene subrutas */}
                     <Route path="/tasks" component={TaskRoutes} />
+                    <Route path="/types" component={TaskRoutes} />
                   </>
               </div>
           </Content>
