@@ -1,7 +1,7 @@
 {
   "name": "test-app",
   "version": "0.1.0",
-  "proxy": "http://localhost:8088/",
+  "proxy": "http://localhost:8080/",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
