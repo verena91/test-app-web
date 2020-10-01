@@ -10,7 +10,7 @@ function TaskForm (props) {
 
     // const [task, setTask] = useState({});
     const [types, setTypes] = useState([]);
-    const [form] = Form.useForm();
+    const [form] = Form.useForm(); //De ANT, por debajo usa useStates
 
     // Ejecutado solo al renderizar el componente por primera vez
     useEffect(() => {
