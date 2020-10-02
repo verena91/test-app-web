@@ -37,20 +37,20 @@ function TaskForm (props) {
         }
     }, []);
 
-    const submit = (formTask) => {
+    const submit = (formType) => {
         // NOTE: modificamos atributo type para enviar como objeto
-        formTask.type = {
-            id: formTask.type
+        TaskForm.type = {
+            id: TaskForm.type
         }
         const { match, history } = props;
         if (match.params.taskId) {
-            axios.put(`/ws/rest/tasks/${match.params.taskId}`, formTask)
+            axios.put(`/ws/rest/tasks/${match.params.taskId}`, TaskForm)
                 .then((rsp) => {
                     alert('exito');
                     history.push('/tasks');
                 });
         } else {
-            axios.post(`/ws/rest/tasks/`, formTask)
+            axios.post(`/ws/rest/tasks/`, TaskForm)
                 .then((rsp) => {
                     alert('exito');
                     history.push('/tasks');

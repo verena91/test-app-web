@@ -4,10 +4,13 @@ import { Layout, Menu } from 'antd';
 import "antd/dist/antd.css";
 import TaskList from './components/TaskList';
 import TaskForm from './components/TaskForm';
+import TypeList from './components/TypeList';
+import TypeForm from './components/TypeForm';
 import Home from './components/Home';
 import About from './components/About';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { AppstoreOutlined } from '@ant-design/icons';
+
 
 const { SubMenu } = Menu;
 const { Header, Footer, Content } = Layout;
@@ -50,6 +53,22 @@ function TaskRoutes({ match }) {
   );
 }
 
+
+function TypeRoutes(props) {
+  return (
+    <>
+      <Route exact path={`${props.match.path}/new`} component={TypeForm} />
+      <Route
+        exact
+        path={`${props.match.path}/edit/:typeID`}
+        component={TypeForm}
+      />
+      <Route exact path={`${props.match.path}/`} component={TypeList} />
+    </>
+  );
+  }
+  
+
 function App() {
   return (
       <Router>
@@ -68,7 +87,8 @@ function App() {
                     <Route path="/about" component={About} />
                     {/* Hacemos esto porque tasks tiene subrutas */}
                     <Route path="/tasks" component={TaskRoutes} />
-                  </>
+                    <Route path="/types" component={TypeRoutes} />
+                   </>
               </div>
           </Content>
           <Footer style={{textAlign: 'center'}}>

@@ -1,60 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, DatePicker, Select, Row, Col } from 'antd';
+import React, { useEffect } from 'react';
 import axios from 'axios';
-import moment from 'moment';
+import {Form, Button, Col, Input, Row } from 'antd';
 
-const { Option } = Select;
+function TypeForm(props) {
+    const [form] = Form.useForm(); //De ANT, por debajo usa useStates
 
-
-function TypeForm (props) {
-
-    // const [task, setTask] = useState({});
-   // const [types, setTypes] = useState([]);
-    const [form] = Form.useForm();
-
-    // Ejecutado solo al renderizar el componente por primera vez
     useEffect(() => {
-
-        // Obtengo los tipos del backend para poder mostrar en el select
-        axios.get('/ws/rest/types') //preguntar si esto tiene que quedarse
-            .then(res => {
-                setTypes(res.data)
-            })
-            .catch(err => {
-                console.log(err);
-            });
-
-        const { match } = props;
-        if (match.params.taskId) {
-            axios.get(`/ws/rest/types/${match.params.taskId}`)
-                .then((rsp) => {
-                    // NOTE: modificamos atributo type para tener como id
-                    let taskForm = rsp.data;
-                    taskForm.type = taskForm.type ? taskForm.type.id : null;
-                    taskForm.limitDate = taskForm.limitDate ? moment(taskForm.limitDate) : moment();
-                    form.setFieldsValue(taskForm);
-            });
+        console.log(props.match.params.typeID)
+        if (props.match.params.typeID) {
+            axios.get('/ws/rest/types/' + props.match.params.typeID)
+                .then((res) => {
+                    console.log(res.data);
+                    form.setFieldsValue(res.data); //Rellenar campos
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         }
     }, []);
 
-    const submit = (formType) => {
-        // NOTE: modificamos atributo type para enviar como objeto
-        formTask.type = {
-            id: formTask.type
+    //Envío del formulario: put o post
+    const submit = (typeForm) => {
+        //Actualizar
+        if (props.match.typeID) {
+            axios.put('/ws/rest/types/' + props.match.params.typeID, typeForm)
+                .then((res) => {
+                    console.log(res);
+                    props.history.push('/types');
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         }
-        const { match, history } = props;
-        if (match.params.taskId) {
-            axios.put(`/ws/rest/tasks/${match.params.taskId}`, formTask)
-                .then((rsp) => {
-                    alert('exito');
-                    history.push('/tasks');
-                });
-        } else {
-            axios.post(`/ws/rest/tasks/`, formTask)
-                .then((rsp) => {
-                    alert('exito');
-                    history.push('/tasks');
-                });
+        //Crear
+        else {
+            axios.post('/ws/rest/types', typeForm)
+                .then((res) => {
+                    console.log(res);
+                    props.history.push('/types');
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         }
     }
 
@@ -62,21 +49,22 @@ function TypeForm (props) {
         console.log('Success:', values);
         submit(values);
     };
-    
+
     const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);
     };
 
+    //Diseño del formulario
     return (
         <Form
-            style={{width: '60%', margin: '0 auto'}}
+            style={{ width: '60%', margin: '0 auto' }}
             form={form}
             layout="vertical"
             name="basic"
             initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
-            >
+        >
             <Form.Item
                 label="Name"
                 name="name"
@@ -84,7 +72,6 @@ function TypeForm (props) {
             >
                 <Input />
             </Form.Item>
-
             <Form.Item
                 label="Description"
                 name="description"
@@ -92,35 +79,10 @@ function TypeForm (props) {
             >
                 <Input />
             </Form.Item>
-
-            <Form.Item
-                label="Type"
-                name="type"
-                rules={[{ required: true, message: 'Required!' }]}
-            >
-                <Select style={{ width: '100%' }} onChange={(value) => console.log('handleChangeSelect -> ' + value)}>
-                    {
-                        types.map(type => {
-                            return (
-                                <Option key={type.id} value={type.id}>{type.name}</Option>
-                            )
-                        })
-                    }
-                </Select>
-            </Form.Item>
-
-            <Form.Item
-                label="Limit Date"
-                name="limitDate"
-                rules={[{ required: true, message: 'Required!' }]}
-            >
-                <DatePicker onChange={(date) => console.log('handleChangeDatepicker -> ' + date)} />
-            </Form.Item>
-
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <Row>
                     <Col span={12}>
-                        <Button type="default" onClick={() => props.history.push(`/tasks`)}>
+                        <Button type="default" onClick={() => props.history.push(`/types`)}>
                             Cancel
                         </Button>
                     </Col>
@@ -134,5 +96,4 @@ function TypeForm (props) {
         </Form>
     )
 }
-
 export default TypeForm;

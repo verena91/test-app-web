@@ -1,54 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Row, Col, Space, Tooltip, Button } from 'antd';
-import { EditFilled, DeleteFilled, PlusOutlined } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import axios from 'axios';
+import { Button, Col, Row, Space, Table, Tooltip } from 'antd';
+import { DeleteFilled, EditFilled, PlusOutlined } from '@ant-design/icons';
 
-const dummyTasks = [
-    {
-        "id": 1,
-        "creationDate": null,
-        "deleted": null,
-        "description": "prueba front",
-        "file": null,
-        "limitDate": 1571951460000,
-        "name": "Verena Ojeda",
-        "updateDate": null,
-        "resuelta": true,
-        "type": {
-            "id": 2,
-            "deleted": null,
-            "description": "tipo2",
-            "name": "tipo2"
-        }
-    },
-    {
-        "id": 2,
-        "creationDate": 1546311600000,
-        "deleted": null,
-        "description": "prueba2 cambiada",
-        "file": null,
-        "limitDate": 1546311600000,
-        "name": "prueba2",
-        "updateDate": 1546311600000,
-        "resuelta": true,
-        "type": null
-    },
-    {
-        "id": 3,
-        "creationDate": 1546311600000,
-        "deleted": null,
-        "description": "prueba2 cambiada",
-        "file": null,
-        "limitDate": 1546311600000,
-        "name": "prueba2",
-        "updateDate": 1546311600000,
-        "resuelta": true,
-        "type": null
-    }
-]
 
-function TypeList (props) {
+function TypeList(props) {
 
     const [types, setTypes] = useState([]);
 
@@ -67,76 +24,57 @@ function TypeList (props) {
         getTypes();
     }, [])
 
-    const deleteType = id => {
-        axios.delete(`/ws/rest/types/${id}`)
+    const deleteType = id_type => {
+        axios.delete(`/ws/rest/types/${id_type}`)
             .then(res => {
-                alert(`Tarea con ID: ${id} borrada correctamente`);
-                getTypes();
+                alert(`Tarea eliminada correctamente`);
+                getTypes();//Actualizar siempre la lista despues de la eliminación
             })
             .catch(err => {
                 console.log(err);
             });
     };
 
+    //Para mostrar el contenido de la tabla listada de Types
     const columns = [
         {
             title: 'ID',
-            dataIndex: 'id',
-            key: 'id'
+            dataIndex: 'id_type', //Atender según BD, creo
+            key: 'id_type'
         },
         {
-          title: 'Name',
-          dataIndex: 'name',
-          key: 'name'
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name'
         },
         {
-          title: 'Description',
-          dataIndex: 'description',
-          key: 'description',
+            title: 'Description',
+            dataIndex: 'description',
+            key: 'description',
         },
-        // {
-        //   title: 'Creation Date',
-        //   dataIndex: 'creationDate',
-        //   key: 'creationDate',
-        //   render: date => moment(date).format('DD/MM/YYYY')
-        // },
+
+        //Parte de botones para editar y eliminar los registros
         {
-            title: 'Limit Date',
-            dataIndex: 'limitDate',
-            key: 'limitDate',
-            render: date => moment(date).format('DD/MM/YYYY')
-          },
-        {
-          title: 'Type',
-          key: 'type',
-          dataIndex: 'type',
-          render: type => (
-            <>
-              {type && type.name}
-            </>
-          ),
-        },
-        {
-          title: 'Actions',
-          key: 'action',
-          render: (text, record) => (
-            <Space size="middle">
-                <Tooltip title="Edit">
-                    <Button 
-                        type="primary" 
-                        shape="circle" 
-                        onClick={() => props.history.push(`${props.match.url}/edit/${record.id}`)} 
-                        icon={<EditFilled />} />
-                </Tooltip>
-                <Tooltip title="Delete">
-                    <Button 
-                        type="danger" 
-                        shape="circle" 
-                        onClick={() => deleteTask(record.id)} 
-                        icon={<DeleteFilled />} />
-                </Tooltip>
-            </Space>
-          ),
+            title: 'Actions',
+            key: 'action',
+            render: (text, record) => (
+                <Space size="middle">
+                    <Tooltip title="Edit">
+                        <Button
+                            type="primary"
+                            shape="circle"
+                            onClick={() => props.history.push(`${props.match.url}/edit/${record.id}`)}
+                            icon={<EditFilled />} />
+                    </Tooltip>
+                    <Tooltip title="Delete">
+                        <Button
+                            type="danger"
+                            shape="circle"
+                            onClick={() => deleteType(record.id_type)}
+                            icon={<DeleteFilled />} />
+                    </Tooltip>
+                </Space>
+            ),
         }
     ];
 
@@ -145,18 +83,19 @@ function TypeList (props) {
             <Row style={{ padding: 20 }}>
                 <Col span={22}></Col>
                 <Col span={2}>
-                <Tooltip title="New">
-                    <Button 
-                        type="primary" 
-                        shape="round" 
-                        onClick={() => props.history.push(`${props.match.url}/new`)}
-                        icon={<PlusOutlined />}>New Task</Button>
-                </Tooltip>
+                    <Tooltip title="New">
+                        {/*Botón para agregar un nuevo type */}
+                        <Button
+                            type="primary"
+                            shape="round"
+                            onClick={() => props.history.push(`${props.match.url}/new`)}
+                            icon={<PlusOutlined />}>New Type</Button>
+                    </Tooltip>
                 </Col>
             </Row>
-            <Table pagination={{ defaultCurrent:1, pageSize: 5, total:tasks.length }} columns={columns} dataSource={tasks} />
+            <Table pagination={{ defaultCurrent: 1, pageSize: 5, total: types.length }} columns={columns} dataSource={types} />
         </div>
     )
-}
 
+}
 export default TypeList;
