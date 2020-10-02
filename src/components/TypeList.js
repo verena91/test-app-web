@@ -31,6 +31,10 @@ function TypeList(props) {
             alert('Type deleted');
             getTypes();
         })
+         .catch(err => {
+            alert('No se puede eliminar el Type');
+           console.log(err);
+        });
     }
 
     const columns = [

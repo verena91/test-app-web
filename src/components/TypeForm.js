@@ -7,8 +7,8 @@ function TypeForm(props) {
     const [form] = Form.useForm();
 
     useEffect(() => {
-        if (props.match.typeId) {
-            axios.get('/ws/rest/types/' + props.match.typeId)
+        if (props.match.params.typeId) {
+            axios.get('/ws/rest/types/' + props.match.params.typeId)
                 .then((res) => {
                     console.log(res.data);
                     form.setFieldsValue(res.data);
@@ -17,8 +17,8 @@ function TypeForm(props) {
     }, []);
 
     const submit = (typeForm) => {
-        if (props.match.typeId) {
-            axios.put('/ws/rest/types/' + props.match.typeId, typeForm)
+        if (props.match.params.typeId) {
+            axios.put('/ws/rest/types/' + props.match.params.typeId, typeForm)
                 .then((res) => {
                     console.log(res);
                     props.history.push('/types');
