@@ -16,7 +16,7 @@ function TaskForm (props) {
     useEffect(() => {
 
         // Obtengo los tipos del backend para poder mostrar en el select
-        axios.get('/ws/rest/types')
+        axios.get('/ws/rest/tasks')
             .then(res => {
                 setTypes(res.data)
             })
