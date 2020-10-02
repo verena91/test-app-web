@@ -25,9 +25,14 @@ function AppMenu() {
         <Menu.Item key="tasks:1"><Link to="/tasks">Tasks</Link></Menu.Item>
         <Menu.Item key="tasks:2"><Link to="/tasks/new">New Task</Link></Menu.Item>
       </SubMenu>
+      <SubMenu key="types" icon={<AppstoreOutlined />} title="Types">
+        <Menu.Item key="type:1"><Link to="/types">Types</Link></Menu.Item>
+        <Menu.Item key="type:2"><Link to="/types/new">New Type</Link></Menu.Item>
+      </SubMenu>
       <Menu.Item key="about" icon={<AppstoreOutlined />}>
         <Link to="/about">About</Link>
       </Menu.Item>
+      
     </Menu>
   );
 }
