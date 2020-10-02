@@ -60,7 +60,7 @@ function TypeRoutes(props) {
       <Route exact path={`${props.match.path}/new`} component={TypeForm} />
       <Route
         exact
-        path={`${props.match.path}/edit/:typeId`}
+        path={`${props.match.path}/edit/:typeID`}
         component={TypeForm}
       />
       <Route exact path={`${props.match.path}/`} component={TypeList} />
@@ -70,34 +70,34 @@ function TypeRoutes(props) {
 
 function App() {
   return (
-      <Router>
-        <Layout>
-          <Header style={{ color: 'white' , fontSize: 30, textAlign: 'center'}}>
-              <div>ToDo List</div>
-          </Header>
-          <Content>
-              
-              <div className="site-layout-content">
-                  <AppMenu/>
-                  <br/>
-                  {/* Secccion donde se van a mostrar los diferentes componentes que rendericemos */}
-                  <>
-                    <Route path="/" exact component={Home} />
-                    <Route path="/about" component={About} />
-                    {/* Hacemos esto porque tasks tiene subrutas */}
-                    <Route path="/tasks" component={TaskRoutes} />
-                    <Route path="/types" component={TypeRoutes} />
-                  </>
-              </div>
-          </Content>
-          <Footer style={{textAlign: 'center'}}>
-              <p>Teléfono</p>
-              <p>Dirección</p>
-              <p>Ciudad - País</p>
-          </Footer>
-        </Layout>
-      </Router>
-      
+    <Router>
+      <Layout>
+        <Header style={{ color: 'white', fontSize: 30, textAlign: 'center' }}>
+          <div>ToDo List</div>
+        </Header>
+        <Content>
+
+          <div className="site-layout-content">
+            <AppMenu />
+            <br />
+            {/* Secccion donde se van a mostrar los diferentes componentes que rendericemos */}
+            <>
+              <Route path="/" exact component={Home} />
+              <Route path="/about" component={About} />
+              {/* Hacemos esto porque tasks tiene subrutas */}
+              <Route path="/tasks" component={TaskRoutes} />
+              <Route path="/types" component={TypeRoutes} />
+            </>
+          </div>
+        </Content>
+        <Footer style={{ textAlign: 'center' }}>
+          <p>Teléfono</p>
+          <p>Dirección</p>
+          <p>Ciudad - País</p>
+        </Footer>
+      </Layout>
+    </Router>
+
   );
 }
 

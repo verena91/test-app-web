@@ -1,16 +1,18 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
-import {Form, Button, Col, Input, Row } from 'antd';
+import { Form, Button, Col, Input, Row } from 'antd';
+import { ConsoleSqlOutlined } from '@ant-design/icons';
 
 function TypeForm(props) {
     const [form] = Form.useForm(); //De ANT, por debajo usa useStates
 
     useEffect(() => {
-        if (props.match.typeID) {
-            axios.get('/ws/rest/types/' + props.match.typeID)
+        console.log(props.match.params.typeID)
+        if (props.match.params.typeID) {
+            axios.get('/ws/rest/types/' + props.match.params.typeID)
                 .then((res) => {
                     console.log(res.data);
-                    form.SetFieldsValues(res.data); //Rellenar campos
+                    form.setFieldsValue(res.data); //Rellenar campos
                 })
                 .catch((err) => {
                     console.log(err);
@@ -81,7 +83,7 @@ function TypeForm(props) {
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <Row>
                     <Col span={12}>
-                        <Button type="default" onClick={() => props.history.push(`/tasks`)}>
+                        <Button type="default" onClick={() => props.history.push(`/types`)}>
                             Cancel
                         </Button>
                     </Col>

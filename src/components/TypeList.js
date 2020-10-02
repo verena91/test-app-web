@@ -27,10 +27,11 @@ function TypeList(props) {
     const deleteType = id_type => {
         axios.delete(`/ws/rest/types/${id_type}`)
             .then(res => {
-                alert(`Tarea eliminada correctamente`);
+                alert(`Tipo eliminado correctamente`);
                 getTypes();//Actualizar siempre la lista despues de la eliminación
             })
             .catch(err => {
+                alert('No se puede eliminar este tipo')
                 console.log(err);
             });
     };
